@@ -6,32 +6,31 @@ public class Systeme {
 	public int tn;
 	public int abtastrate = 1;
 
-	//Können auch Vektoren sein, deshalb Listen
+	//Koennen auch Vektoren sein, deshalb Listen
 	private ArrayList<Double> currentY; 
 	private ArrayList<Double> currentX;
 	private ArrayList<Double> currentU;
 	
-	Systeme () 
-	{
+	private ArrayList<String> XEquations;
+	private ArrayList<String> YEquations;
+	
+	Systeme () {
 		
 	}
 	
-	public void inputSignal (ArrayList<Double> currentU, int time) 
-	{
+	public void inputSignal (ArrayList<Double> currentU, int time) {
 		this.currentU = currentU;
 		this.calculateStatus();
 	}
 	
-	public void calculateStatus () 
-	{
-		// erst die Zust�nde
+	public void calculateStatus () {
+		// erst die Zustaende
 		
 		
 		// jetzt der Ausgang
 	}
 	
-	public ArrayList<Double> getCurrentValues () 
-	{
+	public ArrayList<Double> getCurrentValues () {
 		return currentY;
 	}
 }
