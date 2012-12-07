@@ -39,6 +39,9 @@
 ***************************************************************************************/
 
 package backEnd;
+
+import com.sun.org.apache.xpath.internal.functions.Function;
+
 // Class for Runge-Kutta solution of ordinary differential equations
 public class RungeKutta{
 
@@ -64,8 +67,11 @@ public class RungeKutta{
         public RungeKutta(){
         }
 
-        public void setInitialValueOfX(double x0){
+        public void setInitialValueOfX(double x0)
+        {
             this.x0 = x0;
+            
+            String function = "new double[]{gleichung1.hetText(), gleichung2.getText()};";
         }
 
         public void setFinalValueOfX(double xn){
