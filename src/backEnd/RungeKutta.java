@@ -71,7 +71,6 @@ public class RungeKutta{
         {
             this.x0 = x0;
             
-            String function = "new double[]{gleichung1.hetText(), gleichung2.getText()};";
         }
 
         public void setFinalValueOfX(double xn){
