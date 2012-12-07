@@ -5,8 +5,9 @@ public class Systeme {
 	public int t0;
 	public int tn;
 	public int abtastrate = 1;
-	
-	private ArrayList<Double> currentY;
+
+	//KÃ¶nnen auch Vektoren sein, deshalb Listen
+	private ArrayList<Double> currentY; 
 	private ArrayList<Double> currentX;
 	private ArrayList<Double> currentU;
 	
@@ -20,7 +21,7 @@ public class Systeme {
 	}
 	
 	public void calculateStatus () {
-		// erst die ZustŠnde
+		// erst die Zustï¿½nde
 		
 		
 		// jetzt der Ausgang
