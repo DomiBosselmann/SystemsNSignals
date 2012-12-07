@@ -8,13 +8,13 @@ public class JavaFileGeneration
     //String function = "new double[]{gleichung1.hetText(), gleichung2.getText()};";
 
 
-
 	private File file1;
 	private ArrayList<String> strings=new ArrayList<String>();
 
 
 	public void writeTheFile(File file1, String content)
 	{
+		//Im File steht der Pfad zur Datei + Name und Endung
 		this.file1 = file1;
 		this.strings = splitString(content);
 		
