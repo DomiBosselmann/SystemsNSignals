@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.ArrayList;
 
-public class JavaFileGeneration 
+public class WriteInFile 
 {
     //String function = "new double[]{gleichung1.hetText(), gleichung2.getText()};";
 
