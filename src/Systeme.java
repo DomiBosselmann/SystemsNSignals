@@ -11,23 +11,27 @@ public class Systeme {
 	private ArrayList<Double> currentX;
 	private ArrayList<Double> currentU;
 	
-	Systeme () {
+	Systeme () 
+	{
 		
 	}
 	
-	public void inputSignal (ArrayList<Double> currentU, int time) {
+	public void inputSignal (ArrayList<Double> currentU, int time) 
+	{
 		this.currentU = currentU;
 		this.calculateStatus();
 	}
 	
-	public void calculateStatus () {
+	public void calculateStatus () 
+	{
 		// erst die Zust�nde
 		
 		
 		// jetzt der Ausgang
 	}
 	
-	public ArrayList<Double> getCurrentValues () {
+	public ArrayList<Double> getCurrentValues () 
+	{
 		return currentY;
 	}
 }
