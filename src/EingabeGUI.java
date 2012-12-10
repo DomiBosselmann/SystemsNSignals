@@ -60,12 +60,9 @@ public class EingabeGUI{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				double d=Double.parseDouble(tmax_text.getText());
-//				double h=Double.parseDouble(h_text.getText());
-	//			public Simulation (double duration, double stepSize, String[] uEquations, String[] xEquations, String[] yEquations, EingabeGUI graph) {
+				double d=Double.parseDouble(tmax_text.getText());
+				double h=Double.parseDouble(h_text.getText());
 				Simulation sim=new Simulation(d,h,ein_text.getText(),function_text.getText(),hfun_text.getText(),self);
-				
-				
 				new Graph(punkte);
 				
 			}
@@ -102,8 +99,11 @@ public class EingabeGUI{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				double d=Double.parseDouble(tmax_text.getText());
+				double h=Double.parseDouble(h_text.getText());
+				double sollw=Double.parseDouble(soll_text.getText());
+				Simulation sim=new Simulation(d,h,ein_text.getText(),function_text.getText(),hfun_text.getText(),sollw,ki_text.getText(),kd_text.getText(),kp_text.getText(),self);
+				new Graph(punkte);
 			}
 		});
 		jf.pack();
