@@ -14,16 +14,16 @@ public class Graph extends JFrame
 	private static final long serialVersionUID = 1L;
 
 	private GeneralPath path;
-	private int x = 1000;
+	private double x = 1000.0;
 
-	private int y = 1000;
+	private double y = 1000.0;
 	ArrayList<Punkt> points;
    public Graph(ArrayList<Punkt> punkte)
    {
        super("FunctionPlotter");
        setDefaultCloseOperation(EXIT_ON_CLOSE);
        setResizable(false);
-       setSize(x, y);
+       setSize((int)(x),(int) (y));
        setVisible(true);
        points=punkte;
    }
@@ -42,26 +42,25 @@ public class Graph extends JFrame
 
    private void drawCross(Graphics g) 
    {
-       g.drawLine(0, y / 2, x, y / 2);
-       g.drawLine(x / 2, 0, x / 2, y);
+       g.drawLine(0, (int)y / 2, (int)x, (int)y / 2);
+       g.drawLine((int)x / 2, 0, (int)x / 2, (int)y);
    }
    
    private void drawFunction(Graphics g) 
    {
        if (path == null) {
            path = new GeneralPath();
-           path.moveTo(points.get(0).getX()*5,points.get(0).getY()*5);
-           float halfY = y / 2; //Mitte der Y Skala
-           float halfX = x / 2; //Mitte der X Skala
+           double halfY = y / 2; //Mitte der Y Skala
+           double halfX = x / 2; //Mitte der X Skala
            //float scale = 180;
-           
+           path.moveTo(points.get(0).getX()*5+halfX,halfY-points.get(0).getY()*5);
            for(Punkt punkt: points )
            {
         	   path.lineTo(halfX+punkt.getX()*5, halfY-punkt.getY()*5);
            }
            
            //f(x) = x ^3
-//           for (int x = (int) -halfX; x < halfX; x++) 
+//           for (doublex = (int) -halfX; x < halfX; x++) 
 //           {
 //               //Mit divsion durch scale skalieren wir die Funktionswerte auf
 //               //"Bildschirmfreundliche" Dimensionen...
