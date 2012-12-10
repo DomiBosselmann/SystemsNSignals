@@ -124,7 +124,7 @@ public class RungeKutta{
         // Fourth order Runge-Kutta for a single ordinary differential equation
         // Non-static method
 
-	    public double[] fourthOrder(IDerivnFunction g){
+	    public double[] fourthOrder(DerivnFunction g){
             if(Double.isNaN(this.x0))throw new IllegalArgumentException("No initial x value has been entered");
             if(Double.isNaN(this.xn))throw new IllegalArgumentException("No final x value has been entered");
             if(this.yy0==null)throw new IllegalArgumentException("No initial y values have been entered");
@@ -175,7 +175,7 @@ public class RungeKutta{
 
     	// Fourth order Runge-Kutta for n ordinary differential equations (ODE)
     	// Static method
-	    public static double[] fourthOrder(IDerivnFunction g, double x0, double[] y0, double xn, double h){
+	    public static double[] fourthOrder(DerivnFunction g, double x0, double[] y0, double xn, double h){
 
 	        RungeKutta rk = new RungeKutta();
 	        rk.setInitialValueOfX(x0);

@@ -1,4 +1,6 @@
 public class SampleClass implements DerivnFunction {
+	
+	private double[] u;
 
 	@Override
 	public double[] derivn(double t, double[] x) {
@@ -10,8 +12,8 @@ public class SampleClass implements DerivnFunction {
 		return x_dot_vec;
 	}
 	
-	public void setU (double u) {
-		
+	public void setU (double[] u) {
+		this.u = u;
 	}
 
 }

@@ -1,66 +1,58 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class Systeme {
-	public int t0;
-	public int tn;
-	public int abtastrate = 1;
+	public double t;
+	public double stepSize = 0.1D;
 
 	//Koennen auch Vektoren sein, deshalb Listen
-	private ArrayList<Double> currentY; 
-	private ArrayList<Double> currentX;
-	private ArrayList<Double> currentU;
+	private double[] currentY; 
+	private double[] currentX;
+	private double[] currentU;
 	
-	private ArrayList<String> XEquations;
-	private ArrayList<String> YEquations;
+	private String[] XEquations;
+	private String[] YEquations;
 	
-	private ArrayList<DerivnFunction> ProcessableXEquations;
-	private ArrayList<DerivnFunction> ProcessableYEquations;
+	private DerivnFunction ProcessableXEquations;
+	private SimpleFunction ProcessableYEquations;
 	
-	Systeme (String[] xEquations, String[] yEquations) {
-		for (String xEquation : XEquations) {
-			this.XEquations.add(xEquation);
-		}
-		
-		for (String yEquation : yEquations) {
-			this.YEquations.add(yEquation);
-		}
+	Systeme (String[] xEquations, String[] yEquations, double stepSize) {
+		this.XEquations = xEquations;
+		this.YEquations = yEquations;
+		this.stepSize = stepSize;
 	}
 	
-	public void inputSignal (ArrayList<Double> currentU, int time) {
+	public void simulateNextStep (double t, double[] currentU) {
+		this.t = t;
 		this.currentU = currentU;
 		this.calculateStatus();
 	}
 	
-	public void convertEquations () {
-		for (String xEquation : this.XEquations) {
-			this.ProcessableXEquations.add(MathEvaluator.convertToClass(xEquation));
-		}
-		
-		for (String yEquation : this.YEquations) {
-			this.ProcessableYEquations.add(MathEvaluator.convertToClass(yEquation));
-		}
+	public void simulateNextStep (double t) {
+		this.t = t;
+		this.currentU = new double[] {};
+		this.calculateStatus();
 	}
 	
-	public void calculateStatus () {
+	public void convertEquations () throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+		this.ProcessableXEquations = MathEvaluator.convertFirstOrderEquationToClass(this.XEquations);
+		this.ProcessableYEquations = MathEvaluator.convertNullOrderEquationToClass(this.YEquations);
+	}
+	
+	private void calculateStatus () {
 		// erst die Zustaende
 		
-		// Create an instance of RungeKutta
-        RungeKutta rk = new RungeKutta();
-
-        // Set values needed by fixed step size method
-        rk.setInitialValueOfX(x0);
-        rk.setFinalValueOfX(xn);
-        rk.setInitialValuesOfY(y0);
-        rk.setStepSize(h);
-
-        // Call Fourth Order Runge-Kutta method
-        yn = rk.fourthOrder(d1);
+		this.ProcessableXEquations.setU(this.currentU);
+        this.currentX = RungeKutta.fourthOrder(this.ProcessableXEquations, this.t, this.currentX, this.t + this.stepSize, this.stepSize);
 		
 		// jetzt der Ausgang
+        
+        this.ProcessableYEquations.setU(this.currentU);
+        this.currentY = this.ProcessableYEquations.calc(this.t);
 	}
 	
-	public ArrayList<Double> getCurrentValues () {
+	public double[] getCurrentValues () {
 		return currentY;
 	}
 }

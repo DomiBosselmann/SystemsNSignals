@@ -15,19 +15,28 @@ public class MathEvaluator {
 	private static File file;
 	
 	
-	public static DerivnFunction convertToClass (String[] equations) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+	public static DerivnFunction convertFirstOrderEquationToClass (String[] equations) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
 		
-		createClass(equations);
+		createClassFirstOrder(equations);
 		compileClass();
 		
-		return getInstance();
+		return getFirstOrderInstance();
 	}
 	
-	private static void createClass (String[] equations) throws IOException {
+	public static SimpleFunction convertNullOrderEquationToClass (String[] equations) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		createClassNullOrder(equations);
+		compileClass();
+		
+		return getNullOrderInstance();
+	}
+	
+	private static void createClassFirstOrder (String[] equations) throws IOException {
 		// Template basteln
 		
-		String classTemplate = "public class %s implements DerivnFunction {\n\t%s\n}";
-		String methodTemplate = "public double[] derivn(double t, double[] x) {\n\t\tdouble[] x_dot_vec = new double[x.length];\n\n\t\t%s\n\n\t\treturn x_dot_vec;\n\t}";
+		String classTemplate = "public class %s implements DerivnFunction {\n%s\n%s\n}";
+		String uVariableTemplate = "\tpivate double[] u;";
+		String derivnMethodTemplate = "\tpublic double[] derivn(double t, double[] x) {\n\t\tdouble[] x_dot_vec = new double[x.length];\n\n\t\t%s\n\n\t\treturn x_dot_vec;\n\t}";
+		String setUMethodTemplate = "\tpublic double[] setU(double[] u) {\n\t\tthis.u = u;\n\t}";
 		
 		// Strings in Code umwandeln
 		
@@ -39,8 +48,37 @@ public class MathEvaluator {
 		
 		// zusammenklatschen
 		
-		String method = String.format(methodTemplate, equationsAsCode);
-		String classCode = String.format(classTemplate, name, method);
+		String method = String.format(derivnMethodTemplate, equationsAsCode) + String.format(setUMethodTemplate, "");
+		String classCode = String.format(classTemplate, name, uVariableTemplate, method);
+		
+		// wegschreiben
+		
+		file = new File("bin/" + name + ".java");		
+		PrintWriter writer = new PrintWriter(new FileWriter(file));
+		writer.print(classCode);
+		writer.close();
+	}
+	
+	private static void createClassNullOrder (String[] equations) throws IOException {
+		// Template basteln
+		
+		String classTemplate = "public class %s implements SimpleFunction {\n%s\n%s\n}";
+		String constantTemplate = "\tpivate double[] u;";
+		String derivnMethodTemplate = "\tpublic double[] calc(double t) {\n\t\tdouble[] x = new double[" + equations.length + "];\n\n\t\t%s\n\n\t\treturn x;\n\t}";
+		String setUMethodTemplate = "\tpublic double[] setU(double[] u) {\n\t\tthis.u = u;\n\t}";
+		
+		// Strings in Code umwandeln
+		
+		String equationsAsCode = "";
+		
+		for (int i = 0; i < equations.length; i++) {
+			equationsAsCode += "x[" + i + "] = " + equations[i] + ";\n\t\t";
+		}
+		
+		// zusammenklatschen
+		
+		String method = String.format(derivnMethodTemplate, equationsAsCode) + String.format(setUMethodTemplate, "");
+		String classCode = String.format(classTemplate, name, constantTemplate, method);
 		
 		// wegschreiben
 		
@@ -65,9 +103,16 @@ public class MathEvaluator {
 		fileManager.close();
 	}
 	
-	private static DerivnFunction getInstance () throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	private static DerivnFunction getFirstOrderInstance () throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Instanz fŸr Rungekutta zurŸckwerfen
 		Object instance = Class.forName(name).newInstance();
 		return (DerivnFunction) instance;
+	}
+	
+	private static SimpleFunction getNullOrderInstance () throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Instanz zur Berechnung zurŸckwerfen
+		Object instance = Class.forName(name).newInstance();
+		return (SimpleFunction) instance;
 	}
 	
 	public static void main (String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
@@ -76,6 +121,6 @@ public class MathEvaluator {
 		equations[0] = "Math.pow(t,3) * Math.tan(t - 2)";
 		equations[1] = "t/2 + Math.sin(t)";
 		
-		MathEvaluator.convertToClass(equations);
+		MathEvaluator.convertFirstOrderEquationToClass(equations);
 	}
 }
