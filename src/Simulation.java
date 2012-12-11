@@ -39,7 +39,7 @@ public class Simulation {
 			// NŠchsten Schritt simulieren
 			
 			if (this.theUltimateRegler != null) {
-				this.theUltimateRegler.simulateNextStep();
+				this.theUltimateRegler.Proceed();
 			} else {
 				this.theUltimateSystem.simulateNextStep(this.t, this.input.calc(this.t));
 			}

@@ -1,6 +1,7 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -31,6 +32,9 @@ public class EingabeGUI{
 	JPanel sys=new JPanel();
 	JPanel regl=new JPanel();
 	EingabeGUI self=this;
+	String[] eing;
+	String[] x;
+	String[] y;
 	
 	int f=1;
 	EingabeGUI(){
@@ -62,7 +66,24 @@ public class EingabeGUI{
 			public void actionPerformed(ActionEvent e) {
 				double d=Double.parseDouble(tmax_text.getText());
 				double h=Double.parseDouble(h_text.getText());
-				Simulation sim=new Simulation(d,h,ein_text.getText(),function_text.getText(),hfun_text.getText(),self);
+				eing[0]=ein_text.getText();
+				x[0]=function_text.getText();
+				y[0]=hfun_text.getText();
+				try {
+					Simulation sim=new Simulation(d,h,eing,x,y,self);
+				} catch (InstantiationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				new Graph(punkte);
 				
 			}
@@ -74,7 +95,6 @@ public class EingabeGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				f++;
-				System.out.println(f);
 				sys.add(new JLabel("Funktion x'"+f+"(t,x,u)"));
 				sys.add(new JTextField());
 				sys.setLayout(new GridLayout(7+f,2));
@@ -102,7 +122,14 @@ public class EingabeGUI{
 				double d=Double.parseDouble(tmax_text.getText());
 				double h=Double.parseDouble(h_text.getText());
 				double sollw=Double.parseDouble(soll_text.getText());
-				Simulation sim=new Simulation(d,h,ein_text.getText(),function_text.getText(),hfun_text.getText(),sollw,ki_text.getText(),kd_text.getText(),kp_text.getText(),self);
+				int ki=Integer.parseInt(ki_text.getText());
+				int kd=Integer.parseInt(kd_text.getText());
+				int kp=Integer.parseInt(kp_text.getText());
+				eing[0]=ein_text.getText();
+				x[0]=function_text.getText();
+				y[0]=hfun_text.getText();
+				
+				Simulation sim=new Simulation(d,h,eing,x,y,sollw,ki,kd,kp,self);
 				new Graph(punkte);
 			}
 		});
