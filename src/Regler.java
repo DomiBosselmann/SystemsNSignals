@@ -57,7 +57,7 @@ public class Regler
 		this.br = this.stepSize/this.Tt;		
 	}
 	
-	public double[] Proceed()
+	public double[] simulateNextStep()
 	{
 		double[] v = new double[this.actualValue.length];
 		

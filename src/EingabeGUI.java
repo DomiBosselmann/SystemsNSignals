@@ -99,7 +99,7 @@ public class EingabeGUI{
 				sys.add(new JTextField());
 				sys.setLayout(new GridLayout(7+f,2));
 				sys.revalidate();
-				jf.revalidate();
+				jf.validate();
 				
 			}
 			

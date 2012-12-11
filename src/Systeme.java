@@ -17,9 +17,10 @@ public class Systeme {
 	private DerivnFunction ProcessableXEquations;
 	private SimpleFunction ProcessableYEquations;
 	
-	Systeme (String[] xEquations, String[] yEquations, double stepSize) {
+	Systeme (String[] xEquations, String[] yEquations, double[] xStartValues, double stepSize) {
 		this.XEquations = xEquations;
 		this.YEquations = yEquations;
+		this.currentX = xStartValues;
 		this.stepSize = stepSize;
 	}
 	
