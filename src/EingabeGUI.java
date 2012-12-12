@@ -32,9 +32,9 @@ public class EingabeGUI{
 	JPanel sys=new JPanel();
 	JPanel regl=new JPanel();
 	EingabeGUI self=this;
-	String[] eing;
-	String[] x;
-	String[] y;
+	String[] eing=new String[20];
+	String[] x=new String[20];
+	String[] y=new String[20];
 	
 	int f=1;
 	EingabeGUI(){
@@ -66,11 +66,13 @@ public class EingabeGUI{
 			public void actionPerformed(ActionEvent e) {
 				double d=Double.parseDouble(tmax_text.getText());
 				double h=Double.parseDouble(h_text.getText());
+				double[] xx = new double[10];
+				xx[0]=Double.parseDouble(x1_text.getText());
 				eing[0]=ein_text.getText();
 				x[0]=function_text.getText();
 				y[0]=hfun_text.getText();
 				try {
-					Simulation sim=new Simulation(d,h,eing,x,y,self);
+					Simulation sim=new Simulation(d,h,eing,x,y,xx,self);
 				} catch (InstantiationException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -122,6 +124,8 @@ public class EingabeGUI{
 				double d=Double.parseDouble(tmax_text.getText());
 				double h=Double.parseDouble(h_text.getText());
 				double sollw=Double.parseDouble(soll_text.getText());
+				double[] xx = new double[10];
+				xx[0]=Double.parseDouble(x1_text.getText());
 				int ki=Integer.parseInt(ki_text.getText());
 				int kd=Integer.parseInt(kd_text.getText());
 				int kp=Integer.parseInt(kp_text.getText());
@@ -129,7 +133,7 @@ public class EingabeGUI{
 				x[0]=function_text.getText();
 				y[0]=hfun_text.getText();
 				
-				Simulation sim=new Simulation(d,h,eing,x,y,sollw,ki,kd,kp,self);
+				Simulation sim=new Simulation(d,h,eing,x,y,xx,sollw,ki,kd,kp,self);
 				new Graph(punkte);
 			}
 		});
