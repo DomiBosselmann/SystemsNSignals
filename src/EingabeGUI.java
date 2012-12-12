@@ -133,7 +133,21 @@ public class EingabeGUI{
 				x[0]=function_text.getText();
 				y[0]=hfun_text.getText();
 				
-				Simulation sim=new Simulation(d,h,eing,x,y,xx,sollw,ki,kd,kp,self);
+				try {
+					Simulation sim=new Simulation(d,h,eing,x,y,xx,sollw,ki,kd,kp,self);
+				} catch (InstantiationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				new Graph(punkte);
 			}
 		});

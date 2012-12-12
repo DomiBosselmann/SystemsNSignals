@@ -1,4 +1,4 @@
-public class SampleClass implements DerivnFunction {
+public class SampleClass_test implements DerivnFunction {
 	
 	private double[] u;
 

@@ -1,3 +1,5 @@
+// Autor: Dominique Bosselmann, 3530073
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,18 +17,28 @@ public class Systeme {
 	private String[] YEquations;
 	
 	private DerivnFunction ProcessableXEquations;
-	private SimpleFunction ProcessableYEquations;
+	private OutputFunction ProcessableYEquations;
 	
-	Systeme (String[] xEquations, String[] yEquations, double[] xStartValues, double stepSize) {
+	private int numberOfOutputs;
+	
+	Systeme (String[] xEquations, String[] yEquations, double[] xStartValues, double stepSize) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
 		this.XEquations = xEquations;
 		this.YEquations = yEquations;
 		this.currentX = xStartValues;
 		this.stepSize = stepSize;
+		
+		this.numberOfOutputs = yEquations.length;
+		
+		// Gleichungen umwandeln
+		
+		this.convertEquations();
 	}
 	
 	public void simulateNextStep (double t, double[] currentU) {
 		this.t = t;
 		this.currentU = currentU;
+		this.ProcessableXEquations.setU(this.currentU);
+		this.ProcessableYEquations.setU(this.currentU);
 		this.calculateStatus();
 	}
 	
@@ -38,7 +50,7 @@ public class Systeme {
 	
 	public void convertEquations () throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
 		this.ProcessableXEquations = MathEvaluator.convertFirstOrderEquationToClass(this.XEquations);
-		this.ProcessableYEquations = MathEvaluator.convertNullOrderEquationToClass(this.YEquations);
+		this.ProcessableYEquations = MathEvaluator.convertOutputFunctionToClass(this.YEquations);
 	}
 	
 	private void calculateStatus () {
@@ -50,10 +62,14 @@ public class Systeme {
 		// jetzt der Ausgang
         
         this.ProcessableYEquations.setU(this.currentU);
-        this.currentY = this.ProcessableYEquations.calc(this.t);
+        this.currentY = this.ProcessableYEquations.calc(this.t, this.currentX);
 	}
 	
 	public double[] getCurrentValues () {
 		return currentY;
+	}
+	
+	public int getNumberOfOutputs () {
+		return this.numberOfOutputs;
 	}
 }

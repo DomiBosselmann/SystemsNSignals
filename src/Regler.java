@@ -16,6 +16,9 @@ public class Regler
 	private double[] actualValue;
 	private int dimension;
 	
+	// System
+	private Systeme system;
+	
 	//Controller values
 	private double[] yOld;
 	private double[] P;
@@ -35,8 +38,8 @@ public class Regler
 		this.kp = p;
 		this.ki = i; 
 		this.kd = d;
-		this.actualValue = system.getCurrentValues();
-		this.dimension = actualValue.length;
+		this.system = system;
+		this.dimension = system.getNumberOfOutputs();
 		
 		this.yOld = new double[dimension];
 		this.P = new double[dimension];
@@ -59,6 +62,7 @@ public class Regler
 	
 	public double[] simulateNextStep()
 	{
+		this.actualValue = this.system.getCurrentValues();
 		double[] v = new double[this.actualValue.length];
 		
 		for(int i=0; i<this.actualValue.length; i++)
