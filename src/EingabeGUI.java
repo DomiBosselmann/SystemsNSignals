@@ -56,7 +56,7 @@ public class EingabeGUI{
 		sys.add(h_text);
 		sys.add(new JLabel("t0"));
 		sys.add(t0_text);
-		sys.add(new JLabel("x1"));
+		sys.add(new JLabel("x0"));
 		sys.add(x1_text);
 		sys.add(new JLabel("Dauer"));
 		sys.add(tmax_text);

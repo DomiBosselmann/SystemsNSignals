@@ -43,8 +43,8 @@ public class Graph extends JFrame
 
    private void drawCross(Graphics g) 
    {
-       g.drawLine(0, (int)y/2, (int)x, (int)y/2 );
-       g.drawLine(10, 0, 10, (int)y);
+       g.drawLine(0, (int)y/2+40, (int)x, (int)y/2+40 );
+       g.drawLine(10,0, 10, (int)y);
    }
    
    private void drawFunction(Graphics g) 
@@ -58,13 +58,13 @@ public class Graph extends JFrame
            for(Punkt p:points){
         	   if(p.getY()>maxy)maxy=p.getY();
            }
-           path.moveTo(points.get(0).getX()+10,(halfY-points.get(0).getY()));
+           path.moveTo(points.get(0).getX()+10,(halfY-points.get(0).getY())+40);
            double scaley=halfY/maxy;
            System.out.println(maxy);
            System.out.println(scaley);
            for(Punkt punkt: points )
            {
-        	   path.lineTo((punkt.getX()*x/scale)+10, (halfY-(punkt.getY())*scaley));
+        	   path.lineTo((punkt.getX()*x/scale)+10, (halfY-(punkt.getY())*scaley)+40);
            }
 
        }
