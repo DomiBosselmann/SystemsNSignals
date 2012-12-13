@@ -32,6 +32,14 @@ public class Systeme {
 		// Gleichungen umwandeln
 		
 		this.convertEquations();
+		
+		// StartAusgang berechnen
+		this.currentU = new double[this.YEquations.length];
+		for (int i = 0; i < this.currentU.length; i++) {
+			this.currentU[i] = 0;
+		}
+		this.ProcessableYEquations.setU(this.currentU);
+		this.currentY = this.ProcessableYEquations.calc(0, this.currentX);
 	}
 	
 	public void simulateNextStep (double t, double[] currentU) {
