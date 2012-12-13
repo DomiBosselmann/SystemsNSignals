@@ -8,11 +8,12 @@ public class Simulation {
 	private double tn;
 	private double t = t0;
 	private double stepSize = 0.01D;
-	
+		
 	private Systeme theUltimateSystem;
 	private Regler theUltimateRegler;
 	
 	private SimpleFunction input;
+	private double[] inputFromRegler;
 	
 	private EingabeGUI graph;
 	
@@ -50,11 +51,11 @@ public class Simulation {
 			
 			if (this.theUltimateRegler != null) {
 				// Erst den Regler ranlassen
-				this.theUltimateRegler.simulateNextStep();
+				this.inputFromRegler = this.theUltimateRegler.simulateNextStep();
 				
 				// Jetzt hat das System fünf Schritte, um zu reagieren
 				for (int i = 1; i <= 5; i++) {
-					this.theUltimateSystem.simulateNextStep(this.t, this.input.calc(this.t));
+					this.theUltimateSystem.simulateNextStep(this.t, this.inputFromRegler);
 					// Punkte der Simulation bestimmen und zeichnen lassen
 					this.graph.addPoint(this.t, this.theUltimateSystem.getCurrentValues());
 					this.t += this.stepSize;

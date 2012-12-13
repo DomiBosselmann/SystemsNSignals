@@ -15,16 +15,17 @@ public class Graph extends JFrame
 
 	private GeneralPath path;
 	private double x = 1000.0;
-
+	double tmax;
 	private double y = 1000.0;
 	ArrayList<Punkt> points;
-   public Graph(ArrayList<Punkt> punkte)
+   public Graph(ArrayList<Punkt> punkte,double tmax)
    {
        super("FunctionPlotter");
        setDefaultCloseOperation(EXIT_ON_CLOSE);
        setResizable(false);
        setSize((int)(x),(int) (y));
        setVisible(true);
+       this.tmax=tmax;
        points=punkte;
    }
    
@@ -42,21 +43,26 @@ public class Graph extends JFrame
 
    private void drawCross(Graphics g) 
    {
-       g.drawLine(0, (int)y / 2, (int)x, (int)y / 2);
-       g.drawLine((int)x / 2, 0, (int)x / 2, (int)y);
+       g.drawLine(0, (int)y/2, (int)x, (int)y/2 );
+       g.drawLine((int)x, 0, (int)x, (int)y);
    }
    
    private void drawFunction(Graphics g) 
    {
        if (path == null) {
            path = new GeneralPath();
-           double halfY = y / 2; //Mitte der Y Skala
-           double halfX = x / 2; //Mitte der X Skala
+           double halfY = y /2; 
+           double halfX = x ; 
            //float scale = 180;
-           path.moveTo(points.get(0).getX()*5+halfX,halfY-points.get(0).getY()*5);
+           double scale=tmax;
+           path.moveTo(points.get(0).getX(),(halfY-points.get(0).getY()));
+           double maxy=0;
+           for(Punkt p:points){
+        	   if(p.getY()>maxy)maxy=p.getY();
+           }
            for(Punkt punkt: points )
            {
-        	   path.lineTo(halfX+punkt.getX()*5, halfY-punkt.getY()*5);
+        	   path.lineTo(punkt.getX()*(x/scale), (halfY-punkt.getY())*y/maxy);
            }
            
            //f(x) = x ^3

@@ -37,6 +37,7 @@ public class EingabeGUI{
 	String[] y=new String[20];
 	
 	int f=1;
+	int s=1;
 	EingabeGUI(){
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setSize(400,400);
@@ -86,7 +87,7 @@ public class EingabeGUI{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				new Graph(punkte);
+				new Graph(punkte,d);
 				
 			}
 			
@@ -97,9 +98,12 @@ public class EingabeGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				f++;
+				s++;
 				sys.add(new JLabel("Funktion x'"+f+"(t,x,u)"));
 				sys.add(new JTextField());
-				sys.setLayout(new GridLayout(7+f,2));
+				sys.add(new JLabel("Startwert"+s));
+				sys.add(new JTextField());
+				sys.setLayout(new GridLayout(7+f+s,2));
 				sys.revalidate();
 				jf.validate();
 				
@@ -148,7 +152,7 @@ public class EingabeGUI{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				new Graph(punkte);
+				new Graph(punkte,d);
 			}
 		});
 		jf.pack();
