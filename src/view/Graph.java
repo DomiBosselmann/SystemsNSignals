@@ -8,16 +8,17 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Graph extends JFrame 
 {
 	private static final long serialVersionUID = 1L;
-
 	private GeneralPath path;
-	private double x = 1000.0;
+	private double x = 500.0;
 	double tmax;
-	private double y = 1000.0;
+	private double y = 500.0;
 	ArrayList<Punkt> points;
+	Graph self=this;
    public Graph(ArrayList<Punkt> punkte,double tmax)
    {
        super("FunctionPlotter");
@@ -32,7 +33,6 @@ public class Graph extends JFrame
    
    public void paint(Graphics g) 
    {
-
        g.setColor(Color.white);
        super.paint(g);
        g.setColor(Color.black);
@@ -44,7 +44,7 @@ public class Graph extends JFrame
    private void drawCross(Graphics g) 
    {
        g.drawLine(0, (int)y/2, (int)x, (int)y/2 );
-       g.drawLine((int)x, 0, (int)x, (int)y);
+       g.drawLine(10, 0, 10, (int)y);
    }
    
    private void drawFunction(Graphics g) 
@@ -53,26 +53,20 @@ public class Graph extends JFrame
            path = new GeneralPath();
            double halfY = y /2; 
            double halfX = x ; 
-           //float scale = 180;
            double scale=tmax;
-           path.moveTo(points.get(0).getX(),(halfY-points.get(0).getY()));
-           double maxy=0;
+           double maxy=1;
            for(Punkt p:points){
         	   if(p.getY()>maxy)maxy=p.getY();
            }
+           path.moveTo(points.get(0).getX()+10,(halfY-points.get(0).getY()));
+           double scaley=halfY/maxy;
+           System.out.println(maxy);
+           System.out.println(scaley);
            for(Punkt punkt: points )
            {
-        	   path.lineTo(punkt.getX()*(x/scale), (halfY-punkt.getY())*y/maxy);
+        	   path.lineTo((punkt.getX()*x/scale)+10, (halfY-(punkt.getY())*scaley));
            }
-           
-           //f(x) = x ^3
-//           for (doublex = (int) -halfX; x < halfX; x++) 
-//           {
-//               //Mit divsion durch scale skalieren wir die Funktionswerte auf
-//               //"Bildschirmfreundliche" Dimensionen...
-//               path.lineTo(halfX + x, //die X- Schrittweite
-//            		   	halfY - (x * x * x) / scale); //Y-Schrittweite, in der Klammer steht die Funktion 
-//           }
+
        }
        Graphics2D g2d = (Graphics2D) g;
        g2d.draw(path);
